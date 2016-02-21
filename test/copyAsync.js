@@ -56,9 +56,10 @@ describe("enFsCopyAsync", function() {
         enFs.writeFileSync(nodePath.join(nodePath.join(tmpPath, "data"), "f1.txt"), "file1");
         enFs.writeFileSync(nodePath.join(nodePath.join(tmpPath, "data"), "f2.txt"), "file2");
         enFs.writeFileSync(nodePath.join(tmpPath, "identicalFile"), "some data");
+        enFs.writeFileSync(nodePath.join(tmpPath, "identicalFile1"), "some data");
         if (windowsTestLink) {
             enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink"), "file");
-            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink1"), "file");
+            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile1"), nodePath.join(tmpPath, "testLink1"), "file");
         }
     });
     after(function() {
@@ -199,8 +200,9 @@ describe("enFsCopyAsync", function() {
         });
     });
     describe("> when the src and dst are identical", function() {
-        var file, fileData;
+        var file, fileData, file1;
         file = nodePath.join(tmpPath, "identicalFile");
+        file1 = nodePath.join(tmpPath, "identicalFile1");
         fileData = "some data";
         describe("> when the src and dst are the same file", function() {
             it("should not copy and not throw an error", function(done) {
@@ -235,7 +237,7 @@ describe("enFsCopyAsync", function() {
         describe("> when dst is symlink and points to src", function() {
             it("should not copy and keep the symlink", function(done) {
                 var src, dst;
-                src = file;
+                src = file1;
                 dst = nodePath.join(tmpPath, "testLink1");
                 if (isWindows && !windowsTestLink) {
                     return done();
