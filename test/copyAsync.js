@@ -220,6 +220,9 @@ describe("enFsCopyAsync", function() {
                     return done();
                 }
                 copy(src, dst, function(err) {
+                    if(err) {
+                        throw err;
+                    }
                     (err === null).should.be.equal(true);
                     enFs.readFileSync(dst, "utf8").should.be.equal(fileData);
                     enFs.readlinkSync(src).should.be.equal(dst);
