@@ -57,8 +57,8 @@ describe("enFsCopyAsync", function() {
         enFs.writeFileSync(nodePath.join(nodePath.join(tmpPath, "data"), "f2.txt"), "file2");
         enFs.writeFileSync(nodePath.join(tmpPath, "identicalFile"), "some data");
         if (windowsTestLink) {
-            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink"));
-            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink1"));
+            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink"), "file");
+            enFs.symlinkSync(nodePath.join(tmpPath, "identicalFile"), nodePath.join(tmpPath, "testLink1"), "file");
         }
     });
     after(function() {
@@ -220,10 +220,10 @@ describe("enFsCopyAsync", function() {
                     return done();
                 }
                 copy(src, dst, function(err) {
-                    if(err) {
+                    if (err) {
                         console.log(err);
-                        console.log("IsWindows: "+isWindows);
-                        console.log("WindowsTestLink: "+windowsTestLink);
+                        console.log("IsWindows: " + isWindows);
+                        console.log("WindowsTestLink: " + windowsTestLink);
                     }
                     (err === null).should.be.equal(true);
                     enFs.readFileSync(dst, "utf8").should.be.equal(fileData);
