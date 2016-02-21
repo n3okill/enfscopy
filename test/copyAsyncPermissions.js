@@ -37,7 +37,7 @@ describe("enFsCopyAsyncPermissions", function() {
     });
 
     it("should maintain file permissions and ownership", function(done) {
-        var src, dst, ownerFile, ownerDir, f1, f2, d1, d2;
+        var src, dst, ownerFile, ownerDir, f1, f2, d1;
         if (isWindows) {
             return done();
         }

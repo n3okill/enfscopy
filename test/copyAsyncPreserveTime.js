@@ -18,7 +18,7 @@ var nodePath = require("path"),
     cwd = process.cwd();
 
 describe("enFsCopyAsyncPreserveTime", function() {
-    var tmpPath, helpersPath, isWindows, error = false;
+    var tmpPath, helpersPath, isWindows;
     tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctime");
     helpersPath = nodePath.join(__dirname, "helper");
     isWindows = /^win/.test(process.platform);

@@ -72,7 +72,7 @@ describe("enFsCopySync", function() {
         it("should only copy files allowed by filter regex", function() {
             var src, dst, filter;
             src = nodePath.join(tmpPath, "file.bin");
-            enFs.writeFileSync(src, "")
+            enFs.writeFileSync(src, "");
             dst = nodePath.join(tmpPath, "dstfile.html");
             filter = /.html$|.css$/i;
             copy(src, dst, filter);
@@ -85,7 +85,7 @@ describe("enFsCopySync", function() {
         it("should only copy files allowed by filter function", function() {
             var src, dst, filter;
             src = nodePath.join(tmpPath, "file.css");
-            enFs.writeFileSync(src, "")
+            enFs.writeFileSync(src, "");
             dst = nodePath.join(tmpPath, "dstFile.css");
             filter = function(s) {
                 return s.split('.').pop() !== "css"
@@ -212,7 +212,7 @@ describe("enFsCopySync", function() {
                 enFs.writeFileSync(dst, "data");
                 enFs.chmodSync(dst, parseInt("0444", 8));
                 copy(src, dst, {overwrite: true});
-                var contents = enFs.readFileSync(dst, "utf8")
+                var contents = enFs.readFileSync(dst, "utf8");
                 contents.should.containEql("datasrc");
             });
         });

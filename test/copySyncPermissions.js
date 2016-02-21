@@ -37,7 +37,7 @@ describe("enFsCopySyncPermissions", function() {
     });
 
     it("should maintain file permissions and ownership", function() {
-        var src, dst, ownerFile, ownerDir, f1, f2, d1, d2;
+        var src, dst, ownerFile, ownerDir, f1, f2, d1;
         if (isWindows) {
             return done();
         }
@@ -89,7 +89,7 @@ describe("enFsCopySyncPermissions", function() {
     });
 
 
-    function createFile(name, mode, owner, callback) {
+    function createFile(name, mode, owner) {
         enFs.writeFileSync(name, "");
         enFs.chmodSync(name, mode);
         enFs.chownSync(name, process.getuid(), owner);
@@ -98,7 +98,7 @@ describe("enFsCopySyncPermissions", function() {
         return stat;
     }
 
-    function createDir(path, mode, owner, callback) {
+    function createDir(path, mode, owner) {
         enFs.mkdirSync(path);
         enFs.chmodSync(path, mode);
         enFs.chownSync(path, process.getuid(), owner);
