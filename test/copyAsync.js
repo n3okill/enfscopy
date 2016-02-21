@@ -221,7 +221,9 @@ describe("enFsCopyAsync", function() {
                 }
                 copy(src, dst, function(err) {
                     if(err) {
-                        throw err;
+                        console.log(err);
+                        console.log("IsWindows: "+isWindows);
+                        console.log("WindowsTestLink: "+windowsTestLink);
                     }
                     (err === null).should.be.equal(true);
                     enFs.readFileSync(dst, "utf8").should.be.equal(fileData);
