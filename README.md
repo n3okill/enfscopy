@@ -87,6 +87,11 @@ Additional Methods
     console.log("Copied %d items with a total size of %d",statistics.items,statistics.size);
 ```
 
+Credit
+------
+This functionality is based on [NCP](https://github.com/AvianFlu/ncp) with many improvements.
+
+
 
 License
 -------
