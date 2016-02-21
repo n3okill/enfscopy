@@ -1,0 +1,62 @@
+{
+  "name": "enfcopy",
+  "version": "0.0.1",
+  "description": "Copy files, directories and links in node cp -R",
+  "license": "CC-BY-4.0",
+  "author": {
+    "name": "Joao Parreira",
+    "email": "joaofrparreira@gmail.com"
+  },
+  "homepage": "https://github.com/n3okill/enfscopy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n3okill/enfscopy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/n3okill/enfscopy/issues"
+  },
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "make test",
+    "appveyor": "node ./node_modules/mocha/bin/mocha --reporter spec --require should test/*.js"
+  },
+  "dependencies": {
+    "enfspatch": "^0.0.3",
+    "enfsmkdirp": "0.0.1",
+    "enfsfind": "0.0.1"
+  },
+  "devDependencies": {
+    "eslint": "2.1.0",
+    "eslint-plugin-mocha": "2.0.0",
+    "mocha": "2.4.5",
+    "should": "8.2.2",
+    "rimraf": "2.5.2"
+  },
+  "keywords": [
+    "copy",
+    "cp",
+    "dereference",
+    "dir",
+    "directory",
+    "fs",
+    "file",
+    "file system",
+    "filter",
+    "limit",
+    "link",
+    "mkdir",
+    "mkdirp",
+    "overwrite",
+    "preserve",
+    "recursive",
+    "statistics",
+    "stream",
+    "timestamps"
+  ]
+}
