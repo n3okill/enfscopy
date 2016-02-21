@@ -36,7 +36,7 @@ describe("enFsCopySyncDevNull", function() {
         it("should return an error", function() {
             // no /dev/null on windows
             if (isWindows) {
-                return done();
+                return;
             }
             copy("/dev/null", nodePath.join(tmpPath, "file.txt"));
             enFs.lstatSync(nodePath.join(tmpPath, "file.txt")).size.should.be.equal(0);

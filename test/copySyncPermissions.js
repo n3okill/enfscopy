@@ -39,7 +39,7 @@ describe("enFsCopySyncPermissions", function() {
     it("should maintain file permissions and ownership", function() {
         var src, dst, ownerFile, ownerDir, f1, f2, d1;
         if (isWindows) {
-            return done();
+            return;
         }
 
         // these are Mac specific I think (at least staff), should find Linux equivalent

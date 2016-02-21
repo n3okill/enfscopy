@@ -20,6 +20,9 @@ describe("enFsCopyAsyncToSelf", function() {
     var tmpPath, isWindows;
     tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctoself");
     isWindows = /^win/.test(process.platform);
+    if(isWindows){
+        return;
+    }
     before(function() {
         enfsmkdirp.mkdirpSync(tmpPath);
         process.chdir(tmpPath);

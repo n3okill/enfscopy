@@ -283,7 +283,7 @@ describe("enFsCopySync", function() {
         });
         it("copies symlinks by default", function() {
             if (isWindows && !windowsTestLink) {
-                return done();
+                return;
             }
             copy(src, dst);
             enFs.readlinkSync(nodePath.join(dst, "fileLink")).should.be.equal(file);
@@ -292,7 +292,7 @@ describe("enFsCopySync", function() {
 
         it("copies file contents when dereference=true", function() {
             if (isWindows && !windowsTestLink) {
-                return done();
+                return;
             }
             copy(src, dst, {dereference: true});
             var fileSymLink, dirSymLink;

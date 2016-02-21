@@ -66,8 +66,8 @@ describe("enFsCopyAsyncPreserveTime", function() {
                         enFs.stat(nodePath.join(dst, FILE), function(err, statDst) {
                             (err === null).should.be.equal(true);
                             if (isWindows) {
-                                statSrc.mtime.getTime().should.be.equal(utimes.timeRemoveMillis(statDst.mtime.getTime()));
-                                statSrc.atime.getTime().should.be.equal(utimes.timeRemoveMillis(statDst.atime.getTime()));
+                                statDst.mtime.getTime().should.be.equal(utimes.timeRemoveMillis(statSrc.mtime.getTime()));
+                                statDst.atime.getTime().should.be.equal(utimes.timeRemoveMillis(statSrc.atime.getTime()));
                             } else {
                                 statSrc.mtime.getTime().should.be.equal(statDst.mtime.getTime());
                                 statSrc.atime.getTime().should.be.equal(statDst.atime.getTime());
