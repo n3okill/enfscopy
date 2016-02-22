@@ -24,7 +24,7 @@ Usage
 `enfscopy`
 
 ```js
-    var enfscopy = require("esnofscopy");
+    var enfscopy = require("enfscopy");
 ```
 
 Errors
