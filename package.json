@@ -1,6 +1,6 @@
 {
   "name": "enfcopy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Copy files, directories and links in node cp -R",
   "license": "CC-BY-4.0",
   "author": {
