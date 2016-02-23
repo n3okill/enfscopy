@@ -8,7 +8,11 @@
 enfscopy
 =========
 Module that add copy functionality to node fs module
+
 **enfs** stands for [E]asy [N]ode [fs]
+
+This module is intended to work as a sub-module of [enfs](https://www.npmjs.com/package/enfs)
+
 
 Description
 -----------
@@ -89,7 +93,7 @@ Additional Methods
 
 Credit
 ------
-This functionality is based on [NCP](https://github.com/AvianFlu/ncp) with many improvements.
+This functionality is based on [NCP](https://github.com/AvianFlu/ncp) with many improvements and a sync version.
 
 
 
