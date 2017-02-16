@@ -7,21 +7,20 @@
 "use strict";
 
 
-var nodePath = require("path"),
-    nodeOs = require("os"),
-    enFs = require("enfspatch"),
-    rimraf = require("rimraf"),
-    enfsmkdirp = require("enfsmkdirp"),
-    enFsCopy = require("../"),
-    utimes = require("../lib/utimes"),
-    copy = enFsCopy.copy,
-    cwd = process.cwd();
+const nodePath = require("path");
+const nodeOs = require("os");
+const enFs = require("enfspatch");
+const rimraf = require("rimraf");
+const enfsmkdirp = require("enfsmkdirp");
+const enFsCopy = require("../");
+const utimes = require("../lib/utimes");
+const copy = enFsCopy.copy;
+const cwd = process.cwd();
 
 describe("enFsCopyAsyncPreserveTime", function() {
-    var tmpPath, helpersPath, isWindows;
-    tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctime");
-    helpersPath = nodePath.join(__dirname, "helper");
-    isWindows = /^win/.test(process.platform);
+    const tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctime");
+    const helpersPath = nodePath.join(__dirname, "helper");
+    const isWindows = /^win/.test(process.platform);
 
     before(function() {
         enfsmkdirp.mkdirpSync(tmpPath);
@@ -33,12 +32,11 @@ describe("enFsCopyAsyncPreserveTime", function() {
     });
 
     describe("> modification option", function() {
-        var FILE = "file1";
+        const  FILE = "file1";
         describe("> when modified option is turned off", function() {
             it("should have different timestamp on copy", function(done) {
-                var src, dst;
-                src = helpersPath;
-                dst = nodePath.join(tmpPath, "off");
+                const src = helpersPath;
+                const dst = nodePath.join(tmpPath, "off");
                 copy(src, dst, {preserveTimestamps: false}, function(err) {
                     (err === null).should.be.equal(true);
                     enFs.stat(nodePath.join(src, FILE), function(err, statSrc) {
@@ -56,9 +54,8 @@ describe("enFsCopyAsyncPreserveTime", function() {
 
         describe("> when modified option is turned on", function() {
             it("should have the same timestamps on copy", function(done) {
-                var src, dst;
-                src = helpersPath;
-                dst = nodePath.join(tmpPath, "on");
+                const src = helpersPath;
+                const dst = nodePath.join(tmpPath, "on");
                 copy(src, dst, {preserveTimestamps: true}, function(err) {
                     (err === null).should.be.equal(true);
                     enFs.stat(nodePath.join(src, FILE), function(err, statSrc) {

@@ -7,21 +7,21 @@
 "use strict";
 
 
-var nodePath = require("path"),
-    nodeOs = require("os"),
-    enFs = require("enfspatch"),
-    nodeCrypto = require("crypto"),
-    rimraf = require("rimraf"),
-    enfsmkdirp = require("enfsmkdirp"),
-    enFsCopy = require("../"),
-    copy = enFsCopy.copySync,
-    cwd = process.cwd();
+const nodePath = require("path");
+const nodeOs = require("os");
+const enFs = require("enfspatch");
+const nodeCrypto = require("crypto");
+const rimraf = require("rimraf");
+const enfsmkdirp = require("enfsmkdirp");
+const enFsCopy = require("../");
+const copy = enFsCopy.copySync;
+const cwd = process.cwd();
 
 describe("enFsCopySync", function() {
-    var SIZE, tmpPath, isWindows, windowsTestLink;
-    tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopysync");
-    SIZE = 16 * 64 * 1024 + 7;
-    isWindows = /^win/.test(process.platform);
+    let windowsTestLink;
+    const tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopysync");
+    const SIZE = 16 * 64 * 1024 + 7;
+    const isWindows = /^win/.test(process.platform);
     windowsTestLink = true;
 
     before(function() {
@@ -47,21 +47,17 @@ describe("enFsCopySync", function() {
     });
     describe("> when the source is a file", function() {
         it("should copy the file", function() {
-            var src, dst;
-            src = nodePath.join(tmpPath, "TEST_enfscopy_src");
-            dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
+            const src = nodePath.join(tmpPath, "TEST_enfscopy_src");
+            const dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
             enFs.writeFileSync(src, nodeCrypto.randomBytes(SIZE));
-            var srcMd5;
-            srcMd5 = nodeCrypto.createHash("md5").update(enFs.readFileSync(src)).digest("hex");
+            const srcMd5 = nodeCrypto.createHash("md5").update(enFs.readFileSync(src)).digest("hex");
             copy(src, dst);
-            var dstMd5;
-            dstMd5 = nodeCrypto.createHash("md5").update(enFs.readFileSync(dst)).digest("hex");
+            const dstMd5 = nodeCrypto.createHash("md5").update(enFs.readFileSync(dst)).digest("hex");
             srcMd5.should.be.equal(dstMd5);
         });
         it("should return an error if the source file does not exist", function(done) {
-            var src, dst;
-            src = "this-file-does-not-exist.file";
-            dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
+            const src = "this-file-does-not-exist.file";
+            const dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
             try {
                 copy(src, dst);
             } catch (err) {
@@ -70,11 +66,10 @@ describe("enFsCopySync", function() {
             }
         });
         it("should only copy files allowed by filter regex", function() {
-            var src, dst, filter;
-            src = nodePath.join(tmpPath, "file.bin");
+            const src = nodePath.join(tmpPath, "file.bin");
             enFs.writeFileSync(src, "");
-            dst = nodePath.join(tmpPath, "dstfile.html");
-            filter = /.html$|.css$/i;
+            const dst = nodePath.join(tmpPath, "dstfile.html");
+            const filter = /.html$|.css$/i;
             copy(src, dst, filter);
             try {
                 enFs.statSync(dst);
@@ -83,11 +78,10 @@ describe("enFsCopySync", function() {
             }
         });
         it("should only copy files allowed by filter function", function() {
-            var src, dst, filter;
-            src = nodePath.join(tmpPath, "file.css");
+            const src = nodePath.join(tmpPath, "file.css");
             enFs.writeFileSync(src, "");
-            dst = nodePath.join(tmpPath, "dstFile.css");
-            filter = function(s) {
+            const dst = nodePath.join(tmpPath, "dstFile.css");
+            const filter = function(s) {
                 return s.split('.').pop() !== "css"
             };
             copy(src, dst, filter);
@@ -98,10 +92,9 @@ describe("enFsCopySync", function() {
             }
         });
         it("accepts options object in place of filter", function() {
-            var src, dst;
-            src = nodePath.join(tmpPath, "file.bin");
+            const src = nodePath.join(tmpPath, "file.bin");
             enFs.writeFileSync(src, "");
-            dst = nodePath.join(tmpPath, "dstFile.bin");
+            const dst = nodePath.join(tmpPath, "dstFile.bin");
             copy(src, dst, {filter: /.html$|.css$/i});
             try {
                 enFs.statSync(dst);
@@ -110,9 +103,8 @@ describe("enFsCopySync", function() {
             }
         });
         it("should maintain file mode", function() {
-            var src, dst;
-            src = nodePath.join(tmpPath, "TEST_enfscopy_src");
-            dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
+            const src = nodePath.join(tmpPath, "TEST_enfscopy_src");
+            const dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
             enFs.writeFileSync(src, nodeCrypto.randomBytes(SIZE));
             enFs.chmodSync(src, parseInt('0750', 8));
             copy(src, dst);
@@ -121,11 +113,10 @@ describe("enFsCopySync", function() {
 
         describe("> when the destination dir does not exist", function() {
             it("should create the destination directory and copy the file", function() {
-                var src, dst, data;
-                src = nodePath.join(tmpPath, "file.txt");
-                data = "did it copy?\n";
+                const src = nodePath.join(tmpPath, "file.txt");
+                const data = "did it copy?\n";
                 enFs.writeFileSync(src, data, "utf8");
-                dst = nodePath.join(tmpPath, "this", "path", "does", "not", "exist", "copied.txt");
+                const dst = nodePath.join(tmpPath, "this", "path", "does", "not", "exist", "copied.txt");
                 copy(src, dst);
                 enFs.readFileSync(dst, "utf8").should.be.equal(data);
             });
@@ -134,9 +125,8 @@ describe("enFsCopySync", function() {
     describe("> when the source is a directory", function() {
         describe("> when the source directory does not exist", function() {
             it("should return an error", function(done) {
-                var src, dst;
-                src = nodePath.join(tmpPath, "this_dir_dos_not_exist");
-                dst = nodePath.join(tmpPath, "this_dir_really_does_not_matter");
+                const src = nodePath.join(tmpPath, "this_dir_dos_not_exist");
+                const dst = nodePath.join(tmpPath, "this_dir_really_does_not_matter");
                 try {
                     copy(src, dst);
                 } catch (err) {
@@ -146,49 +136,46 @@ describe("enFsCopySync", function() {
             });
         });
         it("should copy the directory", function() {
-            var FILES, src, dst, subdir, i;
-            FILES = 2;
-            src = nodePath.join(tmpPath, "src");
-            dst = nodePath.join(tmpPath, "dst");
+            const FILES = 2;
+            const src = nodePath.join(tmpPath, "src");
+            const dst = nodePath.join(tmpPath, "dst");
             enFs.mkdirSync(src);
-            for (i = 0; i < FILES; i++) {
+            for (let i = 0; i < FILES; i++) {
                 enFs.writeFileSync(nodePath.join(src, i.toString()), nodeCrypto.randomBytes(SIZE));
             }
-            subdir = nodePath.join(src, "subdir");
+            const subdir = nodePath.join(src, "subdir");
             enFs.mkdirSync(subdir);
-            for (i = 0; i < FILES; i++) {
+            for (let i = 0; i < FILES; i++) {
                 enFs.writeFileSync(nodePath.join(subdir, i.toString()), nodeCrypto.randomBytes(SIZE));
             }
             copy(src, dst);
-            var statDst = enFs.statSync(dst);
-            var statFile, dstSubDir;
+            const statDst = enFs.statSync(dst);
+            let statFile;
             statDst.isDirectory().should.be.equal(true);
-            for (i = 0; i < FILES; i++) {
+            for (let i = 0; i < FILES; i++) {
                 statFile = enFs.statSync(nodePath.join(dst, i.toString()));
                 statFile.isFile().should.be.equal(true);
             }
-            dstSubDir = nodePath.join(dst, "subdir");
-            var statDstSubDir = enFs.statSync(dstSubDir);
+            const dstSubDir = nodePath.join(dst, "subdir");
+            const statDstSubDir = enFs.statSync(dstSubDir);
             statDstSubDir.isDirectory().should.be.equal(true);
-            for (i = 0; i < FILES; i++) {
+            for (let i = 0; i < FILES; i++) {
                 statFile = enFs.statSync(nodePath.join(dstSubDir, i.toString()));
                 statFile.isFile().should.be.equal(true);
             }
         });
         describe("> when the destination directory does not exist", function() {
             it("should create the destination directory and copy the file", function() {
-                var src, f1, f2, dst;
-                src = nodePath.join(tmpPath, "data");
+                const src = nodePath.join(tmpPath, "data");
                 enFs.mkdirSync(src);
-                f1 = "file1";
-                f2 = "file2";
+                const f1 = "file1";
+                const f2 = "file2";
                 enFs.writeFileSync(nodePath.join(src, "f1.txt"), f1);
                 enFs.writeFileSync(nodePath.join(src, "f2.txt"), f2);
-                dst = nodePath.join(tmpPath, "this", "path", "does", "not", "exist");
+                const dst = nodePath.join(tmpPath, "this", "path", "does", "not", "exist");
                 copy(src, dst);
-                var c1, c2;
-                c1 = enFs.readFileSync(nodePath.join(dst, "f1.txt"), "utf8");
-                c2 = enFs.readFileSync(nodePath.join(dst, "f2.txt"), "utf8");
+                const c1 = enFs.readFileSync(nodePath.join(dst, "f1.txt"), "utf8");
+                const c2 = enFs.readFileSync(nodePath.join(dst, "f2.txt"), "utf8");
                 c1.should.be.equal(f1);
                 c2.should.be.equal(f2);
             });
@@ -205,20 +192,19 @@ describe("enFsCopySync", function() {
         });
         describe("> when overwrite is true and dst is readonly", function() {
             it("should copy the file and not throw an error", function() {
-                var src, dst;
-                src = nodePath.join(tmpPath, "TEST_enfscopy_src");
-                dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
+                const src = nodePath.join(tmpPath, "TEST_enfscopy_src");
+                const dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
                 enFs.writeFileSync(src, "datasrc");
                 enFs.writeFileSync(dst, "data");
                 enFs.chmodSync(dst, parseInt("0444", 8));
                 copy(src, dst, {overwrite: true});
-                var contents = enFs.readFileSync(dst, "utf8");
+                const contents = enFs.readFileSync(dst, "utf8");
                 contents.should.containEql("datasrc");
             });
         });
     });
     describe("> when the src and dst are identical", function() {
-        var file, fileData;
+        let file, fileData;
         before(function() {
             file = nodePath.join(tmpPath, "identicalFile");
         });
@@ -234,9 +220,8 @@ describe("enFsCopySync", function() {
         });
         describe("> when the src is symlink and points to dst", function() {
             it("should not copy and keep the symlink", function() {
-                var src, dst;
-                src = nodePath.join(tmpPath, "testLink");
-                dst = file;
+                const src = nodePath.join(tmpPath, "testLink");
+                const dst = file;
                 if (isWindows && !windowsTestLink) {
                     return;
                 }
@@ -248,9 +233,8 @@ describe("enFsCopySync", function() {
         });
         describe("> when dst is symlink and points to src", function() {
             it("should not copy and keep the symlink", function() {
-                var src, dst;
-                src = file;
-                dst = nodePath.join(tmpPath, "testLink");
+                const src = file;
+                const dst = nodePath.join(tmpPath, "testLink");
                 if (isWindows && !windowsTestLink) {
                     return;
                 }
@@ -262,14 +246,14 @@ describe("enFsCopySync", function() {
         });
     });
     describe("> when using dereference", function() {
-        var src, file, fileLink, dir, dirFile, dirLink, dst;
+        let src, file, dir, dst;
         beforeEach(function() {
             src = nodePath.join(tmpPath, "src");
             file = nodePath.join(src, "file");
-            fileLink = nodePath.join(src, "fileLink");
+            const fileLink = nodePath.join(src, "fileLink");
             dir = nodePath.join(src, "dir");
-            dirFile = nodePath.join(dir, "dirFile");
-            dirLink = nodePath.join(src, "dirFileLink");
+            const dirFile = nodePath.join(dir, "dirFile");
+            const dirLink = nodePath.join(src, "dirFileLink");
             dst = nodePath.join(tmpPath, "dst");
             if (isWindows && !windowsTestLink) {
                 return;
@@ -295,9 +279,8 @@ describe("enFsCopySync", function() {
                 return;
             }
             copy(src, dst, {dereference: true});
-            var fileSymLink, dirSymLink;
-            fileSymLink = nodePath.join(dst, "fileLink");
-            dirSymLink = nodePath.join(dst, "dirFileLink");
+            const fileSymLink = nodePath.join(dst, "fileLink");
+            const dirSymLink = nodePath.join(dst, "dirFileLink");
             enFs.statSync(fileSymLink).isFile().should.be.equal(true);
             enFs.readFileSync(fileSymLink, "utf8").should.be.equal("contents");
             enFs.statSync(dirSymLink).isDirectory().should.be.equal(true);

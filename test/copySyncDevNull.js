@@ -7,19 +7,18 @@
 "use strict";
 
 
-var nodePath = require("path"),
-    nodeOs = require("os"),
-    enFs = require("enfspatch"),
-    rimraf = require("rimraf"),
-    enfsmkdirp = require("enfsmkdirp"),
-    enFsCopy = require("../"),
-    copy = enFsCopy.copySync,
-    cwd = process.cwd();
+const nodePath = require("path");
+const nodeOs = require("os");
+const enFs = require("enfspatch");
+const rimraf = require("rimraf");
+const enfsmkdirp = require("enfsmkdirp");
+const enFsCopy = require("../");
+const copy = enFsCopy.copySync;
+const cwd = process.cwd();
 
 describe("enFsCopySyncDevNull", function() {
-    var tmpPath, isWindows;
-    tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopysyncdev");
-    isWindows = /^win/.test(process.platform);
+    const tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopysyncdev");
+    const isWindows = /^win/.test(process.platform);
 
     before(function() {
         enfsmkdirp.mkdirpSync(tmpPath);

@@ -7,19 +7,18 @@
 "use strict";
 
 
-var nodePath = require("path"),
-    nodeOs = require("os"),
-    enFs = require("enfspatch"),
-    rimraf = require("rimraf"),
-    enfsmkdirp = require("enfsmkdirp"),
-    enFsCopy = require("../"),
-    copy = enFsCopy.copy,
-    cwd = process.cwd();
+const nodePath = require("path");
+const nodeOs = require("os");
+const enFs = require("enfspatch");
+const rimraf = require("rimraf");
+const enfsmkdirp = require("enfsmkdirp");
+const enFsCopy = require("../");
+const copy = enFsCopy.copy;
+const cwd = process.cwd();
 
 describe("enFsCopyAsyncToSelf", function() {
-    var tmpPath, isWindows;
-    tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctoself");
-    isWindows = /^win/.test(process.platform);
+    const tmpPath = nodePath.join(nodeOs.tmpdir(), "enfscopyasynctoself");
+    const isWindows = /^win/.test(process.platform);
     if(isWindows){
         return;
     }
@@ -37,14 +36,13 @@ describe("enFsCopyAsyncToSelf", function() {
 
 
     describe("> copy to self", function() {
-        var src, out, src_out, src_symlink, src_file, doubleSrcOut, doubleSrcMiddleOut;
-        src = nodePath.join(tmpPath, "src");
-        out = nodePath.join(tmpPath, "src", "out");
-        src_out = nodePath.join(tmpPath, "src_out");
-        src_symlink = nodePath.join(tmpPath, "src_symlink");
-        src_file = nodePath.join(tmpPath, "src", "file.txt");
-        doubleSrcOut = nodePath.join(src, src + "_out");
-        doubleSrcMiddleOut = nodePath.join(src + "_out", src);
+        const src = nodePath.join(tmpPath, "src");
+        const out = nodePath.join(tmpPath, "src", "out");
+        const src_out = nodePath.join(tmpPath, "src_out");
+        const src_symlink = nodePath.join(tmpPath, "src_symlink");
+        const src_file = nodePath.join(tmpPath, "src", "file.txt");
+        const doubleSrcOut = nodePath.join(src, src + "_out");
+        const doubleSrcMiddleOut = nodePath.join(src + "_out", src);
 
         beforeEach(function() {
             enfsmkdirp.mkdirpSync(src);
