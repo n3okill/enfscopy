@@ -36,28 +36,6 @@ describe("enFsCopySyncPreserveTime", function() {
 
     describe("> modification option", function() {
         const FILES = ["file1", nodePath.join("subfolder1", "file2"), nodePath.join("subfolder1", "file3"), nodePath.join("subfolder1", "subfolder2", "file4")];
-        describe("> when modified option is turned off", function() {
-            it("should have different timestamp on copy", function() {
-                const src = helpersPath;
-                const dst = tmpPath;
-                copy(src, dst, {preserveTimestamps: false});
-                for (let i = 0; i < FILES.length; i++) {
-                    testFile({preserveTimestamps: false}, FILES[i]);
-                }
-            });
-        });
-
-        describe("> when modified option is turned on", function() {
-            it("should have the same timestamps on copy", function() {
-                const src = helpersPath;
-                const dst = tmpPath;
-                copy(src, dst, {preserveTimestamps: true});
-                for (let i = 0; i < FILES.length; i++) {
-                    testFile({preserveTimestamps: true}, FILES[i]);
-                }
-            });
-        });
-
         function testFile(options, file) {
             const src = nodePath.join(tmpPath, file);
             const dst = nodePath.join(helpersPath, file);
@@ -76,5 +54,22 @@ describe("enFsCopySyncPreserveTime", function() {
                 statSrc.mtime.getTime().should.not.be.equal(statDst.mtime.getTime());
             }
         }
+        describe("> when modified option is turned off", function() {
+            it("should have different timestamp on copy", function() {
+                copy(helpersPath, tmpPath, {preserveTimestamps: false});
+                for (let i = 0; i < FILES.length; i++) {
+                    testFile({preserveTimestamps: false}, FILES[i]);
+                }
+            });
+        });
+
+        describe("> when modified option is turned on", function() {
+            it("should have the same timestamps on copy", function() {
+                copy(helpersPath, tmpPath, {preserveTimestamps: true});
+                for (let i = 0; i < FILES.length; i++) {
+                    testFile({preserveTimestamps: true}, FILES[i]);
+                }
+            });
+        });
     });
 });

@@ -82,7 +82,7 @@ describe("enFsCopySync", function() {
             enFs.writeFileSync(src, "");
             const dst = nodePath.join(tmpPath, "dstFile.css");
             const filter = function(s) {
-                return s.split('.').pop() !== "css"
+                return s.split(".").pop() !== "css"
             };
             copy(src, dst, filter);
             try {

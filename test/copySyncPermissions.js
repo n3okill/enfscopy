@@ -23,6 +23,24 @@ describe("enFsCopySyncPermissions", function() {
     const S_IFREG = parseInt("0100000", 8);    //regular file
     const S_IFDIR = parseInt("0040000", 8);    //regular directory
 
+    function createFile(name, mode, owner) {
+        enFs.writeFileSync(name, "");
+        enFs.chmodSync(name, mode);
+        enFs.chownSync(name, process.getuid(), owner);
+        const stat = enFs.lstatSync(name);
+        (stat.mode - S_IFREG).should.be.equal(mode);
+        return stat;
+    }
+
+    function createDir(path, mode, owner) {
+        enFs.mkdirSync(path);
+        enFs.chmodSync(path, mode);
+        enFs.chownSync(path, process.getuid(), owner);
+        const stat = enFs.lstatSync(path);
+        (stat.mode - S_IFDIR).should.be.equal(mode);
+        return stat;
+    }
+
     before(function() {
         enfsmkdirp.mkdirpSync(tmpPath);
         process.chdir(tmpPath);
@@ -85,23 +103,4 @@ describe("enFsCopySyncPermissions", function() {
         statNewD2.gid.should.be.equal(statD2.gid);
         statNewD2.uid.should.be.equal(statD2.uid);
     });
-
-
-    function createFile(name, mode, owner) {
-        enFs.writeFileSync(name, "");
-        enFs.chmodSync(name, mode);
-        enFs.chownSync(name, process.getuid(), owner);
-        const stat = enFs.lstatSync(name);
-        (stat.mode - S_IFREG).should.be.equal(mode);
-        return stat;
-    }
-
-    function createDir(path, mode, owner) {
-        enFs.mkdirSync(path);
-        enFs.chmodSync(path, mode);
-        enFs.chownSync(path, process.getuid(), owner);
-        const stat = enFs.lstatSync(path);
-        (stat.mode - S_IFDIR).should.be.equal(mode);
-        return stat;
-    }
 });

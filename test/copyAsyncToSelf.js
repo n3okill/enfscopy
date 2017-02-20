@@ -38,19 +38,19 @@ describe("enFsCopyAsyncToSelf", function() {
     describe("> copy to self", function() {
         const src = nodePath.join(tmpPath, "src");
         const out = nodePath.join(tmpPath, "src", "out");
-        const src_out = nodePath.join(tmpPath, "src_out");
+        const srcOut = nodePath.join(tmpPath, "src_out");
         const src_symlink = nodePath.join(tmpPath, "src_symlink");
-        const src_file = nodePath.join(tmpPath, "src", "file.txt");
+        const srcFile = nodePath.join(tmpPath, "src", "file.txt");
         const doubleSrcOut = nodePath.join(src, src + "_out");
         const doubleSrcMiddleOut = nodePath.join(src + "_out", src);
 
         beforeEach(function() {
             enfsmkdirp.mkdirpSync(src);
             enfsmkdirp.mkdirpSync(out);
-            enfsmkdirp.mkdirpSync(src_out);
+            enfsmkdirp.mkdirpSync(srcOut);
             enfsmkdirp.mkdirpSync(doubleSrcOut);
             enfsmkdirp.mkdirpSync(doubleSrcMiddleOut);
-            enFs.writeFileSync(src_file, "data", "utf8");
+            enFs.writeFileSync(srcFile, "data", "utf8");
         });
 
         it("returns an error when user copies parent to itself", function(done) {
@@ -74,7 +74,7 @@ describe("enFsCopyAsyncToSelf", function() {
             });
         });
         it("copies 'src to 'src_out'", function(done) {
-            copy(src, src_out, function(err) {
+            copy(src, srcOut, function(err) {
                 (err === null).should.be.equal(true);
                 done();
             });
@@ -87,7 +87,7 @@ describe("enFsCopyAsyncToSelf", function() {
             });
         });
         it("copies file 'src/file.txt' to file 'src/file.txt' don't throw error", function(done) {
-            copy(src_file, src_file, function(err) {
+            copy(srcFile, srcFile, function(err) {
                 (err === null).should.be.equal(true);
                 done();
             });

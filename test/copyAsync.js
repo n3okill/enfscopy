@@ -101,7 +101,7 @@ describe("enFsCopyAsync", function() {
             const src = nodePath.join(tmpPath, "file.css");
             const dst = nodePath.join(tmpPath, "dstFile.css");
             const filter = function(path) {
-                return path.split('.').pop() !== "css"
+                return path.split(".").pop() !== "css"
             };
             copy(src, dst, filter, function(err) {
                 (err === null).should.be.equal(true);
@@ -149,7 +149,6 @@ describe("enFsCopyAsync", function() {
             let FILES = 2;
             const src = nodePath.join(tmpPath, "srca");
             const dst = nodePath.join(tmpPath, "dsta");
-            const subdir = nodePath.join(src, "subdir");
             copy(src, dst, function() {
                 let statFile;
                 const statDst = enFs.statSync(dst);
