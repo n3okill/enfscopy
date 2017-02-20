@@ -39,7 +39,7 @@ describe("enFsCopyAsyncToSelf", function() {
         const src = nodePath.join(tmpPath, "src");
         const out = nodePath.join(tmpPath, "src", "out");
         const srcOut = nodePath.join(tmpPath, "src_out");
-        const src_symlink = nodePath.join(tmpPath, "src_symlink");
+        const srcSymlink = nodePath.join(tmpPath, "src_symlink");
         const srcFile = nodePath.join(tmpPath, "src", "file.txt");
         const doubleSrcOut = nodePath.join(src, src + "_out");
         const doubleSrcMiddleOut = nodePath.join(src + "_out", src);
@@ -80,8 +80,8 @@ describe("enFsCopyAsyncToSelf", function() {
             });
         });
         it("copies 'src' to 'src_symlink'", function(done) {
-            enFs.symlinkSync(src, src_symlink);
-            copy(src, src_symlink, function(err) {
+            enFs.symlinkSync(src, srcSymlink);
+            copy(src, srcSymlink, function(err) {
                 (err === null).should.be.equal(true);
                 done();
             });

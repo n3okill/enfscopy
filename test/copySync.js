@@ -82,7 +82,7 @@ describe("enFsCopySync", function() {
             enFs.writeFileSync(src, "");
             const dst = nodePath.join(tmpPath, "dstFile.css");
             const filter = function(s) {
-                return s.split(".").pop() !== "css"
+                return s.split(".").pop() !== "css";
             };
             copy(src, dst, filter);
             try {
@@ -106,7 +106,7 @@ describe("enFsCopySync", function() {
             const src = nodePath.join(tmpPath, "TEST_enfscopy_src");
             const dst = nodePath.join(tmpPath, "TEST_enfscopy_dst");
             enFs.writeFileSync(src, nodeCrypto.randomBytes(SIZE));
-            enFs.chmodSync(src, parseInt('0750', 8));
+            enFs.chmodSync(src, parseInt("0750", 8));
             copy(src, dst);
             enFs.statSync(src).mode.should.be.equal(enFs.statSync(dst).mode);
         });

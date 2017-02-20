@@ -101,7 +101,7 @@ describe("enFsCopyAsync", function() {
             const src = nodePath.join(tmpPath, "file.css");
             const dst = nodePath.join(tmpPath, "dstFile.css");
             const filter = function(path) {
-                return path.split(".").pop() !== "css"
+                return path.split(".").pop() !== "css";
             };
             copy(src, dst, filter, function(err) {
                 (err === null).should.be.equal(true);
