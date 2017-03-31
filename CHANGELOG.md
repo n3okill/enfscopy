@@ -1,7 +1,8 @@
-0.1.1 / 2017-02-20
+1.0.0 / 2017-02-20
 ==================
   * code improvement
-  * dependencies upgrade
+  * dependencies update
+  * major version
   
 0.1.0 / 2016-04-07
 ==================
